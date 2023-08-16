@@ -1,0 +1,43 @@
+{%extends 'base.html'%}
+
+{%block content%}
+{%csrf_token%}
+<div class="border border-primary-subtle w-50 mx-auto p-2">
+    <h1>TO DO LIST</h1>
+    {%if data%}
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">TITLE</th>
+            <th scope="col">DESCRIPTION</th>
+            <th scope="col">STATUS</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for items in data %}
+            {% if not items.is_completed %}
+           <tr>
+
+               <td>{{items.id}}</td>
+               <td>{{items.taskTitle}}</td>
+               <td>{{items.taskDescription}}</td>
+               <td>Incomplete</td>
+               <td>
+                  <a href="{% url 'edit_task' id=items.id%}" class = 'btn btn-warning btn-sm'>edit</a>
+                  <a href="{% url 'delete_task' id=items.id%}" class = 'btn btn-danger btn-sm'>delete</a>
+                  <a href="{% url 'com_task' id=items.id%}" class = 'btn btn-success btn-sm'>complete</a>
+               </td>
+             </tr>
+             {%endif%}
+           {%endfor%}
+         
+         
+        </tbody>
+      </table>
+      {%else %}
+      <h2>No data available</h2>
+      {%endif%}
+</div>
+{%endblock%}
